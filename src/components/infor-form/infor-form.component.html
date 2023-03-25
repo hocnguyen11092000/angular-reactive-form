@@ -1,0 +1,43 @@
+<div class="info-form-container">
+  <form
+    autocomplete="off"
+    [formGroup]="inforForm"
+    (ngSubmit)="formSubmit$.next(null)"
+  >
+    <div class="form-group">
+      <div>user name</div>
+      <input type="text" placeholder="user name" formControlName="userName" />
+      <pre>{{ inforForm.get("userName")?.errors | json }}</pre>
+    </div>
+    <div class="form-group">
+      <div>password</div>
+      <input type="text" placeholder="password" formControlName="password" />
+    </div>
+    <div class="form-group">
+      <div>confirm password</div>
+      <input
+        type="text"
+        placeholder="confirm password"
+        formControlName="confirmPassword"
+      />
+    </div>
+    <ng-container formArrayName="address">
+      <ng-container *ngFor="let item of getControls() as any; let i = index">
+        <div>
+          <ng-container [formGroupName]="i">
+            <input placeholder="title" formControlName="title" />
+            <input placeholder="someThing" formControlName="someThing" />
+            <div formGroupName="name">
+              <input formControlName="first" placeholder="First name" />
+              <input formControlName="last" placeholder="Last name" />
+            </div>
+          </ng-container>
+        </div>
+      </ng-container>
+    </ng-container>
+    <div class="form-group">
+      <button (click)="addAddress()" type="button">adđres</button>
+    </div>
+  </form>
+  <pre>{{ inforForm.value | json }}</pre>
+</div>
