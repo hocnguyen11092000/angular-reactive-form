@@ -14,19 +14,44 @@ import { delay, interval, of, take, tap } from 'rxjs';
   styleUrls: ['./infor-form-container.component.scss'],
 })
 export class InforFormContainerComponent implements OnInit, AfterViewInit {
-  lenght = Array.from(new Array(3));
   @ViewChildren('form') form: QueryList<InforFormComponent>;
+  length: any = [];
   arr: any = [];
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    interval(1000)
+      .pipe(
+        take(5),
+        tap((val) => {
+          const data = {
+            userName: '123456' + val,
+            password: '123456',
+            confirmPassword: '123456',
+            address: [
+              {
+                title: 'a',
+                someThing: 'a',
+                name: {
+                  first: 'ab',
+                  last: 'b',
+                },
+              },
+            ],
+          };
+
+          this.length.push(data);
+        })
+      )
+      .subscribe();
+  }
 
   ngAfterViewInit(): void {}
 
   submitForm() {
     interval(100)
       .pipe(
-        take(3),
+        take(5),
         tap((val) => {
           [...this.form][val].formSubmit$.next(null);
         })

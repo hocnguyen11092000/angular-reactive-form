@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {
   FormGroup,
   FormBuilder,
@@ -26,6 +26,7 @@ import {
   styleUrls: ['./infor-form.component.scss'],
 })
 export class InforFormComponent implements OnInit {
+  @Input() data: any;
   inforForm: FormGroup;
   formSubmit$ = new Subject<any>();
   allFormValid$ = new BehaviorSubject<any>(null);
@@ -36,6 +37,10 @@ export class InforFormComponent implements OnInit {
     this.initInforForm();
     this.addAddress();
 
+    if (this.data) {
+      this.inforForm.patchValue(this.data);
+    }
+
     this.formSubmit$
       .pipe(
         tap(() => this.inforForm.markAsDirty()),
@@ -43,6 +48,8 @@ export class InforFormComponent implements OnInit {
           this.inforForm.statusChanges.pipe(
             startWith(this.inforForm.status),
             filter((status) => {
+              console.log(status);
+
               return status !== 'PENDING';
             }),
             take(1)
