@@ -22,18 +22,23 @@
       />
     </div>
     <ng-container formArrayName="address">
-      <ng-container *ngFor="let item of getControls() as any; let i = index">
-        <div>
-          <ng-container [formGroupName]="i">
-            <input placeholder="title" formControlName="title" />
-            <input placeholder="someThing" formControlName="someThing" />
-            <div formGroupName="name">
-              <input formControlName="first" placeholder="First name" />
-              <input formControlName="last" placeholder="Last name" />
-            </div>
-          </ng-container>
-        </div>
-      </ng-container>
+      <nz-tabset>
+        <nz-tab
+          nzTitle="Tab 1"
+          *ngFor="let item of getControls() as any; let i = index"
+        >
+          <div>
+            <ng-container [formGroupName]="i">
+              <input placeholder="title" formControlName="title" />
+              <input placeholder="someThing" formControlName="someThing" />
+              <div formGroupName="name">
+                <input formControlName="first" placeholder="First name" />
+                <input formControlName="last" placeholder="Last name" />
+              </div>
+            </ng-container>
+          </div>
+        </nz-tab>
+      </nz-tabset>
     </ng-container>
     <div class="form-group">
       <button (click)="addAddress()" type="button">adđres</button>

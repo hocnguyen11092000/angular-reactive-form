@@ -102,11 +102,11 @@ export class InforFormComponent implements OnInit {
 
   addAddress() {
     const addressForm = this._fb.group({
-      title: ['', Validators.required],
-      someThing: ['', Validators.required],
+      title: ['new', Validators.required],
+      someThing: ['new', Validators.required],
       name: new FormGroup({
-        first: new FormControl('', Validators.minLength(2)),
-        last: new FormControl('', Validators.required),
+        first: new FormControl('new', Validators.minLength(2)),
+        last: new FormControl('new', Validators.required),
       }),
     });
     this.address.push(addressForm);

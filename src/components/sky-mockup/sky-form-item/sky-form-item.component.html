@@ -1,0 +1,76 @@
+<div class="info-form-container">
+  <form
+    autocomplete="off"
+    [formGroup]="skyForm"
+    (ngSubmit)="formSubmit$.next(null)"
+  >
+    <ng-container formArrayName="sky">
+      <nz-tabset>
+        <nz-tab
+          [nzTitle]="'lang ' + i"
+          *ngFor="let item of getSkyControls() as any; let i = index"
+        >
+          <div>
+            <ng-container [formGroupName]="i">
+              <input placeholder="lang" formControlName="lang" />
+
+              <input placeholder="name" formControlName="name" />
+              <input placeholder="offerId" formControlName="offerId" />
+
+              <div formArrayName="tiers">
+                <nz-tabset>
+                  <nz-tab
+                    [nzTitle]="'tier ' + TierIndex"
+                    *ngFor="
+                      let tier of langTier(i).controls;
+                      let TierIndex = index
+                    "
+                  >
+                    <div [formGroupName]="TierIndex">
+                      <input
+                        type="text"
+                        formControlName="rank"
+                        placeholder="rank"
+                      />
+                      <pre>{{ langTier(i).get("rank")?.errors | json }}</pre>
+                      <input
+                        type="text"
+                        formControlName="name"
+                        placeholder="name"
+                      />
+                      <div formArrayName="content">
+                        <nz-tabset>
+                          <nz-tab
+                            [nzTitle]="'content ' + contentIndex"
+                            *ngFor="
+                              let tier of tierContent(i, TierIndex).controls;
+                              let contentIndex = index
+                            "
+                          >
+                            <div [formGroupName]="contentIndex">
+                              <input
+                                type="text"
+                                formControlName="pri"
+                                placeholder="pri"
+                              />
+                              <input
+                                type="text"
+                                formControlName="tac"
+                                placeholder="tac"
+                              />
+                            </div>
+                          </nz-tab>
+                        </nz-tabset>
+                      </div>
+                    </div>
+                  </nz-tab>
+                </nz-tabset>
+              </div>
+            </ng-container>
+          </div>
+        </nz-tab>
+      </nz-tabset>
+    </ng-container>
+  </form>
+  <pre>{{ skyForm.value | json }}</pre>
+</div>
