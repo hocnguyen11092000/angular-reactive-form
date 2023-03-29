@@ -1,5 +1,6 @@
 <div class="info-form-container">
   <form
+    nz-form
     autocomplete="off"
     [formGroup]="skyForm"
     (ngSubmit)="formSubmit$.next(null)"
@@ -12,9 +13,17 @@
         >
           <div>
             <ng-container [formGroupName]="i">
-              <input placeholder="lang" formControlName="lang" />
-
-              <input placeholder="name" formControlName="name" />
+              <nz-form-item>
+                <nz-form-control [nzErrorTip]="error">
+                  <input placeholder="lang" formControlName="lang" nz-input />
+                  <pre>{{ lang().at(i).get("lang")?.errors | json }}</pre>
+                </nz-form-control>
+              </nz-form-item>
+              <nz-form-item>
+                <nz-form-control [nzErrorTip]="error">
+                  <input placeholder="name" formControlName="name" />
+                </nz-form-control>
+              </nz-form-item>
               <input placeholder="offerId" formControlName="offerId" />
 
               <div formArrayName="tiers">
@@ -27,11 +36,17 @@
                     "
                   >
                     <div [formGroupName]="TierIndex">
-                      <input
-                        type="text"
-                        formControlName="rank"
-                        placeholder="rank"
-                      />
+                      <nz-form-item>
+                        <nz-form-control [nzErrorTip]="error">
+                          <input
+                            [type]="'number'"
+                            nz-input
+                            type="text"
+                            formControlName="rank"
+                            placeholder="rank"
+                          />
+                        </nz-form-control>
+                      </nz-form-item>
                       <pre>{{ langTier(i).get("rank")?.errors | json }}</pre>
                       <input
                         type="text"
@@ -74,3 +89,11 @@
   </form>
   <pre>{{ skyForm.value | json }}</pre>
 </div>
+<ng-template #error let-control>
+  <ng-container *ngIf="control.hasError('required')"
+    >Trường này không được để trống</ng-container
+  >
+  <ng-container *ngIf="control.hasError('min')"
+    >Trường này nhỏ nhất ký tự</ng-container
+  >
+</ng-template>

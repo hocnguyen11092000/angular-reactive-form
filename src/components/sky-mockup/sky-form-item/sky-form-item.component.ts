@@ -91,7 +91,10 @@ export class SkyFormItemComponent implements OnInit {
     }, 0);
 
     return this._fb.group({
-      rank: [t?.rank || '', Validators.required],
+      rank: [
+        t?.rank || '',
+        Validators.compose([Validators.required, Validators.min(5)]),
+      ],
       name: t?.name || '',
       content: this._fb.array([]),
     });
